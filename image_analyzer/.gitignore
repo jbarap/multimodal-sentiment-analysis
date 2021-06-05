@@ -1,0 +1,26 @@
+# pyenv files
+.python-version
+
+# python interpreted files
+**/*.pyc
+
+# notebooks checkpoints
+**/*.ipynb_checkpoints
+
+# logs from the model
+detr/logs/tensorboard/*
+detr/logs/training/*
+
+# local file for diverse code planning details
+planning.md
+
+# data
+data/*
+!data/*.py
+
+# dev tools
+.vim
+.ropeproject
+
+
+

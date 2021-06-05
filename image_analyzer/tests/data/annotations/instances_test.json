@@ -1,0 +1,51 @@
+{
+  "images": [
+    {
+      "file_name": "cat_dog.jpg",
+      "height": 324,
+      "width": 700,
+      "id": 1
+    }
+  ],
+  "annotations": [
+    {
+      "bbox": [22, 43, 163, 269],
+      "category_id": 18,
+      "image_id": 1
+    },
+    {
+      "bbox": [195, 125, 90, 182],
+      "category_id": 17,
+      "image_id": 1
+    },
+    {
+      "bbox": [269, 17, 156, 300],
+      "category_id": 18,
+      "image_id": 1
+    },
+    {
+      "bbox": [423, 114, 111, 196],
+      "category_id": 17,
+      "image_id": 1
+    },
+    {
+      "bbox": [512, 19, 159, 295],
+      "category_id": 18,
+      "image_id": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "person"
+    },
+    {
+      "id": 17,
+      "name": "cat"
+    },
+    {
+      "id": 18,
+      "name": "dog"
+    }
+  ]
+}

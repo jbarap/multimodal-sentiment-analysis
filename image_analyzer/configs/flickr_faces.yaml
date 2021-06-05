@@ -1,0 +1,33 @@
+dataset:
+    # mandatory dataset options
+    name: "flickr_faces"
+    train_val_split: 0.9
+    num_classes: 1
+
+    # options depending on your dataset
+    labels_file: "data/facial_keypoints/all_data.json"
+    images_path: "data/facial_keypoints/images"
+
+model:
+    head_type: 'complex'  # 'simple' or 'complex'
+    dim_model: 256
+    n_heads: 8
+    n_queries: 100
+
+losses:
+    # lambdas are the loss weights
+    lambda_matcher_classes: 1
+    lambda_matcher_l1: 6
+
+    lambda_loss_classes: 1
+    lambda_loss_l1: 6
+
+    no_class_weight: 2.12  # we are expecting 68 class vs 32 no-class
+
+training:
+    epochs: 50
+    batch_size: 2
+    effective_batch_size: 32
+    lr: 0.0001
+    weight_decay: 0.0001
+
