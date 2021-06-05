@@ -15,4 +15,5 @@ class PathContext:
 
     def __exit__(self, _type, value, traceback):
         os.chdir(self.previous_path)
+        sys.path.remove(self.target_path)
 

@@ -1,11 +1,14 @@
 import argparse
+import os
 from pathlib import Path
 
 import cv2
+import imageio
 import numpy as np
 import torch
 import yaml
 from PIL import Image
+from tqdm import tqdm
 
 import albumentations as A
 import albumentations.pytorch.transforms
@@ -15,8 +18,10 @@ from detr.datasets import transforms
 from detr.utils import data_utils
 
 
-def inference_on_image(model, image_path, save_path=None, target_w=1333, target_h=800):
-    image = Image.open(image_path)
+def inference_on_image(model, image_path=None, image=None, save_path=None, target_w=1333, target_h=800, verbose=True):
+    if not image:
+        image_path = Path(image_path)
+        image = Image.open(str(image_path))
 
     image_w_h_ratio = image.width / image.height
     target_w_h_ratio = target_w / target_h
@@ -40,8 +45,11 @@ def inference_on_image(model, image_path, save_path=None, target_w=1333, target_
         A.pytorch.ToTensor(),
     ])
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     tensor_image = inference_transform(image=np.array(resized_image))['image']
     tensor_image = torch.unsqueeze(tensor_image, 0)
+    tensor_image = tensor_image.to(device)
 
     # Compute the inference
     model.eval()
@@ -72,7 +80,8 @@ def inference_on_image(model, image_path, save_path=None, target_w=1333, target_
         save_path = Path(save_path)
         cv2.imwrite(str(save_path.with_suffix('.jpg')), canvas)
 
-        print('Image saved at:', str(save_path.with_suffix('.jpg')))
+        if verbose:
+            print('Image saved at:', str(save_path.with_suffix('.jpg')))
 
     return {'coords': scaled_coords, 'classes': classes}
 
@@ -124,14 +133,34 @@ def scale_coords(coords, x_scale=1, y_scale=1):
     return [(x1*x_scale, y1*y_scale) for (x1, y1) in coords]
 
 
+def inference_on_video(model, video_path, output_path, temp_dir='data/temp/'):
+    temp_dir = Path(temp_dir)
+
+    reader = imageio.get_reader(video_path)
+    n_frames = reader.count_frames()
+
+    for i, im in tqdm(enumerate(reader),
+                      desc='Visual analysis of video',
+                      total=n_frames):
+
+        image = Image.fromarray(im)
+        inference_on_image(model, image=image, save_path=(temp_dir / f'output_{i}'), verbose=False)
+
+    os.system(f"ffmpeg -r 30 -i {str(temp_dir)}/output_%01d.jpg -vcodec mpeg4 -y {str(output_path)}")
+    os.system(f"rm {str(temp_dir)}/output_*.jpg")
+
+    print('Done!')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_weights', required=True)
     parser.add_argument('--model_config', default='configs/flickr_faces.yaml')
-    parser.add_argument('--image_path', default='data/examples/cat_dog.jpg')
-    parser.add_argument('--image_save_path', default='data/examples/cat_dog_inference.jpg')
+    parser.add_argument('--input_path', default='../examples/catatonic_schizophrenic_interview.mp4')
+    parser.add_argument('--output_path', default='data/examples/cat_dog_inference.jpg')
 
     args = parser.parse_args()
+    args.input_path = Path(args.input_path)
 
     with open(args.model_config, 'r') as f:
         config = yaml.safe_load(f)
@@ -143,6 +172,7 @@ if __name__ == '__main__':
                  head_type=config['model']['head_type'])
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
 
     if args.model_weights == 'demo':
         model.load_demo_state_dict('data/state_dicts/detr_demo.pth')
@@ -150,5 +180,10 @@ if __name__ == '__main__':
         state_dict = torch.load(args.model_weights, map_location=device)['state_dict']
         model.load_state_dict(state_dict)
 
-    inference_on_image(model, args.image_path, args.image_save_path)
+    if args.input_path.suffix in ['.mp4']:
+        output_path = (args.input_path.parent / (args.input_path.stem + '_out')).with_suffix('.mp4')
+        inference_on_video(model, args.input_path, output_path)
+
+    else:
+        inference_on_image(model, args.input_path, args.output_path)
 
