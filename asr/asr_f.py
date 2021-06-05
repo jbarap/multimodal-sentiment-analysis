@@ -60,7 +60,7 @@ def transcribe_audio(listOfAudios):
 
   return listOfText
 
-def transcribe_video(listOfVideos:
+def transcribe_video(listOfVideos):
   listOfText = []
   a = perf_counter()
   for file in listOfVideos:
