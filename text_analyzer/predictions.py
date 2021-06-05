@@ -39,7 +39,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.layers.experimental import preprocessing
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-from __future__ import absolute_import, division, print_function, unicode_literals
+#from __future__ import absolute_import, division, print_function, unicode_literals
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.text import Tokenizer
@@ -100,6 +100,7 @@ def predictions (word2pred,glove_model,fasttext_model):
     #print("final_pred = ",final_pred)
     #print("glove_pred[pred] = ",glove_pred[pred])
     #print("fastext_pred[pred] = ",fastext_pred[pred])
+   final_pred[0][0]=(final_pred[0][0]*1.5)
   return final_pred[0]
 
 frase='hello beautiful'
