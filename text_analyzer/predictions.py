@@ -100,7 +100,7 @@ def predictions (word2pred,glove_model,fasttext_model):
     #print("final_pred = ",final_pred)
     #print("glove_pred[pred] = ",glove_pred[pred])
     #print("fastext_pred[pred] = ",fastext_pred[pred])
-   final_pred[0][0]=(final_pred[0][0]*1.5)
+    final_pred[0][0]=(final_pred[0][0]*1.5)
   return final_pred[0]
 
 frase='hello beautiful'
