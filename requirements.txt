@@ -5,6 +5,7 @@ librosa
 tensorflow-text
 tf-models-official
 sklearn
+imageio-ffmpeg
 absl-py==0.12.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.2.0"
 albumentations==0.5.2; python_version >= "3.6"
 cachetools==4.2.2; python_version >= "3.5" and python_version < "4.0" and (python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0")
