@@ -137,7 +137,7 @@ def inference_on_video(model, video_path, output_path, temp_dir='data/temp/'):
     temp_dir = Path(temp_dir)
 
     reader = imageio.get_reader(video_path)
-    n_frames = reader.count_frames()
+    n_frames = reader.get_meta_data()['nframes']
 
     for i, im in tqdm(enumerate(reader),
                       desc='Visual analysis of video',
