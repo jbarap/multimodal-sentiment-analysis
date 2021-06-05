@@ -5,6 +5,8 @@ librosa
 tensorflow-text
 tf-models-official
 sklearn
+imageio==2.4.1
+imageio-ffmpeg==0.4.4
 absl-py==0.12.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.2.0"
 albumentations==0.5.2; python_version >= "3.6"
 cachetools==4.2.2; python_version >= "3.5" and python_version < "4.0" and (python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0")
@@ -17,7 +19,6 @@ google-auth-oauthlib==0.4.4; python_version >= "3.6" and python_full_version < "
 google-auth==1.30.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.6"
 grpcio==1.37.1; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.2.0"
 idna==2.10; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
-imageio==2.9.0; python_version >= "3.7"
 imgaug==0.4.0; python_version >= "3.6"
 importlib-metadata==4.0.1; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.2.0" and python_version >= "3.6" and python_version < "3.8"
 kiwisolver==1.3.1; python_version >= "3.7"
