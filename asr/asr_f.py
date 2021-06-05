@@ -65,7 +65,7 @@ def transcribe_audio(fileList = []):
     j += 1
   print("\nTerminado en: " + str(f'{perf_counter() - a:.2f}') + " seg.\n")
 
-  return listOfText
+  return ans
 
 def transcribe_video(fileList = []):
   ans = []
@@ -108,5 +108,5 @@ def transcribe_video(fileList = []):
     j += 1
   print("\nTerminado en: " + str(f'{perf_counter() - a:.2f}') + " seg.\n")
 
-  return listOfText
+  return ans
 
