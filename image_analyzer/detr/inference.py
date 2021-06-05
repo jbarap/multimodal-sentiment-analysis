@@ -106,6 +106,9 @@ def filter_inference_results(inference):
     classes = classes.softmax(-1)
     _, classes = torch.max(classes, dim=-1)  # [batch, 100]
 
+    classes = classes.cpu()
+    bboxes = bboxes.cpu()
+
     filtered_classes = [c[c!=no_obj_index].numpy() for c in classes]
     filtered_bboxes = [b[c!=no_obj_index].numpy() for (c, b) in zip(classes, bboxes)]
 
