@@ -29,11 +29,17 @@ from speechbrain.pretrained import EncoderDecoderASR
 
 asr_model2 = EncoderDecoderASR.from_hparams(source="speechbrain/asr-crdnn-rnnlm-librispeech", savedir="pretrained_models/asr-crdnn-rnnlm-librispeech")
 
-def transcribe_audio(listOfAudios):
-  listOfText = []
+def transcribe_audio(fileList = []):
+  ans = []
+  if fileList == [] :
+    uploaded = files.upload()
+    listOfAudios = list(uploaded.keys())
+  else:
+    listOfAudios = fileList
   
   a = perf_counter()
   for file in listOfAudios:
+    ans_element = {}
     duration = librosa.get_duration(filename=file)
     t1 = 0
     t2 = duration * 1000 if duration < 30 else 30000
@@ -54,16 +60,23 @@ def transcribe_audio(listOfAudios):
       resAux = asr_model2.transcribe_file(os.getcwd() + "/" + name)
       textTemp = textTemp + " " + resAux
     
-    listOfText.append(textTemp[1:])
+    ans_element = {'audio_path': file, 'transcription': texTemp[1:]}
+    ans.append(ans_element)
     j += 1
   print("\nTerminado en: " + str(f'{perf_counter() - a:.2f}') + " seg.\n")
 
   return listOfText
 
-def transcribe_video(listOfVideos):
-  listOfText = []
+def transcribe_video(fileList = []):
+  ans = []
+  if fileList == [] :
+    uploaded = files.upload()
+    listOfAudios = list(uploaded.keys())
+  else:
+    listOfAudios = fileList
   a = perf_counter()
-  for file in listOfVideos:
+  for file in listOfAudios:
+    ans_element = {}
     duration = librosa.get_duration(filename=file)
     j = 1
     i = 1
@@ -90,7 +103,8 @@ def transcribe_video(listOfVideos):
       resAux = asr_model2.transcribe_file(os.getcwd() + "/" + name)
       textTemp = textTemp + " " + resAux
     
-    listOfText.append(textTemp[1:])
+    ans_element = {'audio_path': nameVideo, 'video_path': file, 'transcription': textTemp[1:]}
+    ans.append(ans_element)
     j += 1
   print("\nTerminado en: " + str(f'{perf_counter() - a:.2f}') + " seg.\n")
 
