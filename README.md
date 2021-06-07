@@ -5,7 +5,8 @@ El campo de aprendizaje automático se diversifica cada vez más, alcanzando a c
 
 ### Demo
 Para correr el demo se debe ingresar al notebook `ColabCentral.ipynb` y ejecutar todas las celdas.
-[![Open In Colab](https://colab.research.google.com/drive/1ieGuDje5AgOQ1sgbqv9UvSmGTW_ZTEL0?usp=sharing)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ieGuDje5AgOQ1sgbqv9UvSmGTW_ZTEL0?usp=sharing)
 
 ### Contenido personalizado
 
