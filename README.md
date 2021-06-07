@@ -31,3 +31,9 @@ Video usado para el demo:
 - https://www.youtube.com/watch?v=IehtMYlOuIk
 
 
+***
+
+### Sobre este repositorio
+* Se encuentran en carpetas por separado los distintos modelos que se utilizaron para esta implementación conjunta, cada uno cuenta con una explicación más detallada en el readme que se encuentra dentro de cada carpeta.
+
+
